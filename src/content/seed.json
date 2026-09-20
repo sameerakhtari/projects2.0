@@ -1,0 +1,1261 @@
+[
+  {
+    "slug": "homelab",
+    "title": "The living homelab",
+    "subtitle": "An evolving personal infrastructure ecosystem",
+    "summary": "Routing, Linux, storage, containers and home automation—brought together on repurposed hardware, one useful system at a time.",
+    "status": "EVOLVING",
+    "domain": "Infrastructure",
+    "kind": "HYBRID",
+    "timeframe": "Ongoing",
+    "startYear": null,
+    "endYear": null,
+    "sortOrder": 1,
+    "featured": true,
+    "nextIteration": "Document the service inventory and recovery procedure; expand network observability; measure the camera playback path before changing it.",
+    "privateNotes": "",
+    "technologies": [
+      "Linux",
+      "pfSense",
+      "Docker Compose",
+      "Home Assistant",
+      "Frigate",
+      "Jellyfin",
+      "Authelia"
+    ],
+    "sections": [
+      {
+        "heading": "Why build a lab?",
+        "body": "The lab makes infrastructure tangible. A network, a storage system and a collection of services became a place to test how software behaves on physical hardware. It is personal infrastructure with ongoing maintenance, rather than a production availability claim."
+      },
+      {
+        "heading": "Separate the responsibilities",
+        "body": "A dedicated pfSense router handles network control. The main Linux server hosts Docker Compose services. Three separate laptop motherboards form the Kubernetes lab, so cluster experiments do not require moving every household service onto Kubernetes."
+      },
+      {
+        "heading": "A service ecosystem",
+        "body": "Jellyfin and Immich handle media and photos. Frigate and go2rtc support camera recording and streaming experiments. Home Assistant connects the smart-home layer. Portainer, Homepage, Snipe-IT, Netdata, Nginx Proxy Manager and Authelia support administration, visibility and application access."
+      },
+      {
+        "heading": "Storage changes over time",
+        "body": "The storage design has changed across generations. Earlier records describe mirrored SSDs; later notes describe a different boot-storage arrangement. This archive deliberately avoids presenting either historical layout as a verified current topology. Redundancy, backup and restore testing remain separate concerns."
+      },
+      {
+        "heading": "Smaller builds inside the system",
+        "body": "MagicMirror is documented as a running container. Display quality and ambient brightness are separate hardware investigations. Self-hosted Overleaf work includes a created first user and a completed TeX installation in the September record. These are service milestones within the lab, rather than separate flagship projects."
+      },
+      {
+        "heading": "Still being investigated",
+        "body": "Recent camera work concerns main-stream recording, sub-stream detection and playback on different clients. Maintaining recording quality while controlling transcoding load is an active design question. Proposed inventory generation, local AI summaries, WAN/LAN monitoring and doorbell integrations remain future iterations."
+      }
+    ],
+    "updates": [
+      {
+        "date": "2026-08-24",
+        "title": "Service ecosystem recorded",
+        "body": "Container output documented the camera, automation, media, display and monitoring stacks. A running container is not treated as an uptime guarantee.",
+        "kind": "NOTE"
+      },
+      {
+        "date": "2026-09",
+        "title": "A writing environment joins the lab",
+        "body": "The Overleaf setup record includes a first user and a completed TeX installation.",
+        "kind": "NOTE"
+      },
+      {
+        "date": "2026-09-10",
+        "title": "Next: a self-documenting lab",
+        "body": "Compose discovery, a structured inventory and local AI summaries were discussed. Implementation is not yet verified.",
+        "kind": "PLANNED"
+      },
+      {
+        "date": "2026-09",
+        "title": "Camera playback investigation",
+        "body": "Comparing camera stream selection and client behavior while preserving recording quality.",
+        "kind": "EXPERIMENT"
+      }
+    ],
+    "links": [
+      {
+        "label": "Project record",
+        "url": "https://github.com/sameerakhtari/portfolio2.0/blob/main/data/projects.ts"
+      }
+    ],
+    "relationships": [
+      {
+        "target": "home-network",
+        "type": "EVOLVED_FROM",
+        "note": "Dedicated network control became the foundation for local services."
+      },
+      {
+        "target": "nas-media",
+        "type": "EVOLVED_FROM",
+        "note": "Storage and media experiments grew into a Linux/Compose environment."
+      },
+      {
+        "target": "smart-home",
+        "type": "EVOLVED_FROM",
+        "note": "Early physical-device control preceded the Home Assistant layer."
+      }
+    ],
+    "architecture": {
+      "nodes": [
+        {
+          "key": "router",
+          "label": "ROUTER",
+          "detail": "pfSense · network boundary",
+          "column": 0
+        },
+        {
+          "key": "switch",
+          "label": "SWITCH",
+          "detail": "Ethernet distribution",
+          "column": 1
+        },
+        {
+          "key": "host",
+          "label": "HOME SERVER",
+          "detail": "Linux + Docker Compose",
+          "column": 2
+        },
+        {
+          "key": "cluster",
+          "label": "KUBERNETES",
+          "detail": "Three separate boards",
+          "column": 2
+        },
+        {
+          "key": "media",
+          "label": "MEDIA & STORAGE",
+          "detail": "Jellyfin · Immich",
+          "column": 3
+        },
+        {
+          "key": "automation",
+          "label": "AUTOMATION",
+          "detail": "Home Assistant",
+          "column": 3
+        },
+        {
+          "key": "camera",
+          "label": "CAMERAS",
+          "detail": "Frigate · go2rtc",
+          "column": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "router",
+          "to": "switch",
+          "label": "network"
+        },
+        {
+          "from": "switch",
+          "to": "host",
+          "label": "Ethernet"
+        },
+        {
+          "from": "switch",
+          "to": "cluster",
+          "label": "Ethernet"
+        },
+        {
+          "from": "host",
+          "to": "media",
+          "label": "hosts"
+        },
+        {
+          "from": "host",
+          "to": "automation",
+          "label": "hosts"
+        },
+        {
+          "from": "host",
+          "to": "camera",
+          "label": "hosts"
+        }
+      ]
+    },
+    "media": []
+  },
+  {
+    "slug": "reclaimed-cluster",
+    "title": "Three boards. One cluster.",
+    "subtitle": "Kubernetes on repurposed laptop motherboards",
+    "summary": "Three repurposed laptop motherboards, roughly 48 GB of RAM, and a documented load test with 290 running pods.",
+    "status": "BUILT",
+    "domain": "Infrastructure",
+    "kind": "HYBRID",
+    "timeframe": "2026",
+    "startYear": 2026,
+    "endYear": null,
+    "sortOrder": 2,
+    "featured": true,
+    "nextIteration": "Make thermal and resource measurements repeatable, and resolve the recorded Metrics API gap before drawing conclusions about headroom.",
+    "privateNotes": "",
+    "technologies": [
+      "Kubernetes",
+      "containerd",
+      "Ubuntu",
+      "kube-burner",
+      "Linux",
+      "Ethernet"
+    ],
+    "sections": [
+      {
+        "heading": "The idea",
+        "body": "Build a physical cluster from hardware already available: three laptop motherboards from different CPU generations, integrated into a custom shared enclosure. Approximately 16 GB of RAM per node gives the lab roughly 48 GB in total."
+      },
+      {
+        "heading": "Architecture",
+        "body": "Three Linux nodes connect over Ethernet to form a Kubernetes environment. A virtual API endpoint provides cluster access. Public diagrams use K8S-01, K8S-02 and K8S-03 rather than publishing internal addresses."
+      },
+      {
+        "heading": "Historical software snapshot",
+        "body": "The July–August 2026 record names Kubernetes v1.34.9 and containerd 2.2.2. These are historical software details, not a live inventory."
+      },
+      {
+        "heading": "The workload experiment",
+        "body": "A kube-burner v2.8.1 run reached 290 running pods, distributed 99, 93 and 98 across the three nodes. The visualization reproduces those counts. It does not claim a maximum cluster capacity, production benchmark or sustained performance guarantee."
+      },
+      {
+        "heading": "Physical constraints",
+        "body": "The boards share a compact enclosure and fan. Different CPU generations and a 100 Mbps switch make thermal behaviour and network capacity meaningful constraints to investigate."
+      },
+      {
+        "heading": "Open investigation",
+        "body": "The metrics API was unavailable during a documented kubectl top check. Thermal monitoring and the metrics pipeline remain areas to validate before drawing conclusions about resource headroom."
+      }
+    ],
+    "updates": [
+      {
+        "date": "2026-06-28",
+        "title": "A physical three-node cluster",
+        "body": "User-confirmed cluster work included three control-plane/etcd nodes, kube-vip and Cilium.",
+        "kind": "NOTE"
+      },
+      {
+        "date": "2026-07",
+        "title": "290 pods in a recorded test",
+        "body": "The July–August snapshot records a kube-burner test with 99, 93 and 98 pods across three nodes. This is one test result, not a capacity guarantee.",
+        "kind": "EXPERIMENT"
+      }
+    ],
+    "links": [
+      {
+        "label": "Project record",
+        "url": "https://github.com/sameerakhtari/portfolio2.0/blob/main/data/projects.ts"
+      }
+    ],
+    "relationships": [
+      {
+        "target": "homelab",
+        "type": "EXTENDS",
+        "note": "A separate environment for orchestration and workload experiments."
+      }
+    ],
+    "architecture": {
+      "nodes": [
+        {
+          "key": "client",
+          "label": "CLIENT",
+          "detail": "kubectl",
+          "column": 0
+        },
+        {
+          "key": "api",
+          "label": "API ENDPOINT",
+          "detail": "kube-vip",
+          "column": 1
+        },
+        {
+          "key": "n1",
+          "label": "K8S-01",
+          "detail": "Control plane + workloads",
+          "column": 2
+        },
+        {
+          "key": "n2",
+          "label": "K8S-02",
+          "detail": "Control plane + workloads",
+          "column": 2
+        },
+        {
+          "key": "n3",
+          "label": "K8S-03",
+          "detail": "Control plane + workloads",
+          "column": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "client",
+          "to": "api",
+          "label": "cluster access"
+        },
+        {
+          "from": "api",
+          "to": "n1",
+          "label": "API failover"
+        },
+        {
+          "from": "api",
+          "to": "n2",
+          "label": "API failover"
+        },
+        {
+          "from": "api",
+          "to": "n3",
+          "label": "API failover"
+        }
+      ]
+    },
+    "media": []
+  },
+  {
+    "privateNotes": "",
+    "featured": true,
+    "nextIteration": "Measure CPU use and playback behavior on the intended screen before increasing frame rate or tile quality.",
+    "technologies": [
+      "Python",
+      "Flask",
+      "FFmpeg",
+      "Docker Compose",
+      "MJPEG",
+      "RTSP"
+    ],
+    "sections": [
+      {
+        "heading": "Start with the client constraint",
+        "body": "An older Android TV box cannot be assumed to support a modern video frontend. The public implementation uses conservative HTML, CSS and JavaScript and a 1280 × 720-oriented dashboard."
+      },
+      {
+        "heading": "Convert once, share the frames",
+        "body": "The server opens a read-only camera sub-stream and runs one FFmpeg worker per configured camera. Browser clients share that worker’s output rather than starting an independent transcode for every viewer."
+      },
+      {
+        "heading": "Keep recording independent",
+        "body": "The camera dashboard is a compatibility display path. Frigate recording remains independent. The architecture separates the high-quality recording path from the lower-bandwidth MJPEG copy used by the kiosk."
+      },
+      {
+        "heading": "Beyond camera tiles",
+        "body": "The implementation supports optional solar telemetry, cached weather and a local clock. These are separate signals, allowing a missing optional data source to be represented independently."
+      },
+      {
+        "heading": "Tradeoffs",
+        "body": "MJPEG supports older clients, but conversion consumes server resources and repeated JPEG frames use bandwidth. The documented resolution and frame-rate controls are tuning options, not a promise of measured performance."
+      }
+    ],
+    "updates": [
+      {
+        "date": "2026",
+        "title": "Compatibility dashboard implemented",
+        "body": "Public source documents shared FFmpeg workers, MJPEG tiles and optional telemetry.",
+        "kind": "NOTE"
+      }
+    ],
+    "links": [
+      {
+        "label": "Source repository",
+        "url": "https://github.com/sameerakhtari/camera-dashboard"
+      }
+    ],
+    "relationships": [
+      {
+        "target": "homelab",
+        "type": "EXTENDS",
+        "note": "A display client for the camera environment."
+      }
+    ],
+    "architecture": {
+      "nodes": [
+        {
+          "key": "camera",
+          "label": "CAMERA",
+          "detail": "Main + sub-streams",
+          "column": 0
+        },
+        {
+          "key": "nvr",
+          "label": "RECORDING",
+          "detail": "Frigate",
+          "column": 1
+        },
+        {
+          "key": "ffmpeg",
+          "label": "COMPATIBILITY",
+          "detail": "Shared FFmpeg worker",
+          "column": 1
+        },
+        {
+          "key": "browser",
+          "label": "DISPLAY",
+          "detail": "Older kiosk browser",
+          "column": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "camera",
+          "to": "nvr",
+          "label": "main stream"
+        },
+        {
+          "from": "camera",
+          "to": "ffmpeg",
+          "label": "sub-stream"
+        },
+        {
+          "from": "ffmpeg",
+          "to": "browser",
+          "label": "MJPEG"
+        }
+      ]
+    },
+    "media": [],
+    "slug": "camera-dashboard",
+    "title": "A second life for an old screen",
+    "subtitle": "A lightweight camera dashboard for older Android TV boxes",
+    "summary": "A small Flask dashboard translates camera sub-streams into MJPEG so an older kiosk browser can stay useful.",
+    "status": "BUILT",
+    "domain": "Software",
+    "kind": "HYBRID",
+    "timeframe": "2026",
+    "startYear": 2026,
+    "endYear": null,
+    "sortOrder": 3
+  },
+  {
+    "slug": "observability",
+    "title": "Making the lab observable",
+    "subtitle": "Metrics, dashboards and the next network layer",
+    "summary": "Prometheus and Grafana make host and service behavior visible. Log health and WAN/LAN availability are the next parts to strengthen.",
+    "status": "EVOLVING",
+    "domain": "Observability",
+    "kind": "SOFTWARE",
+    "timeframe": "2026 — ongoing",
+    "startYear": 2026,
+    "endYear": null,
+    "sortOrder": 4,
+    "featured": false,
+    "nextIteration": "Add and validate network exporters, investigate log-stack health and record what each availability probe can actually distinguish.",
+    "privateNotes": "",
+    "technologies": ["Netdata", "Prometheus", "Grafana", "Loki"],
+    "sections": [
+      {
+        "heading": "From inspection to observation",
+        "body": "Netdata is part of the lab. By July 2026, the user had confirmed a Prometheus, Grafana, Loki and Node Exporter setup; later September notes confirm Prometheus and Grafana were already configured. The older portfolio label of “planned” was therefore stale."
+      },
+      {
+        "heading": "Different signals, different roles",
+        "body": "Prometheus collects metrics and Grafana presents them. Loki is the log component, but later container output recorded restart behavior. Presence in a Compose stack is not evidence of uninterrupted service or complete log coverage."
+      },
+      {
+        "heading": "The next boundary",
+        "body": "pfSense SNMP and Blackbox probes were proposed to distinguish WAN reachability from LAN availability. Those exporters and the resulting downtime views are planned work, not confirmed deployed monitoring."
+      },
+      {
+        "heading": "What to learn next",
+        "body": "Measurements should answer a concrete question: whether a failure is at the host, service or network layer. Each added dashboard needs a known signal source and a test that the failure is actually visible."
+      }
+    ],
+    "updates": [
+      {
+        "date": "2026-07-12",
+        "title": "Metrics stack confirmed",
+        "body": "The user confirmed the monitoring stack and successful Node Exporter responses.",
+        "kind": "NOTE"
+      },
+      {
+        "date": "2026-09-10",
+        "title": "Network monitoring remains next",
+        "body": "Prometheus and Grafana were already configured; pfSense SNMP and WAN/LAN Blackbox monitoring were proposed extensions.",
+        "kind": "PLANNED"
+      }
+    ],
+    "links": [
+      {
+        "label": "Project record",
+        "url": "https://github.com/sameerakhtari/portfolio2.0/blob/main/data/projects.ts"
+      }
+    ],
+    "relationships": [
+      {
+        "target": "homelab",
+        "type": "EXTENDS",
+        "note": "Adds measurements to the service ecosystem."
+      },
+      {
+        "target": "reclaimed-cluster",
+        "type": "RELATED_TO",
+        "note": "Cluster resource measurements inform workload experiments."
+      }
+    ],
+    "architecture": {
+      "nodes": [
+        {
+          "key": "hosts",
+          "label": "HOSTS",
+          "detail": "Node Exporter",
+          "column": 0
+        },
+        {
+          "key": "prom",
+          "label": "METRICS",
+          "detail": "Prometheus",
+          "column": 1
+        },
+        {
+          "key": "logs",
+          "label": "LOGS",
+          "detail": "Loki · health under review",
+          "column": 1
+        },
+        {
+          "key": "grafana",
+          "label": "DASHBOARDS",
+          "detail": "Grafana",
+          "column": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "hosts",
+          "to": "prom",
+          "label": "scrape"
+        },
+        {
+          "from": "prom",
+          "to": "grafana",
+          "label": "query"
+        },
+        {
+          "from": "logs",
+          "to": "grafana",
+          "label": "query"
+        }
+      ]
+    },
+    "media": []
+  },
+  {
+    "slug": "operational-automation",
+    "title": "From inbox to report",
+    "subtitle": "Self-hosted reporting with a portable output",
+    "summary": "Mail ingestion, browser rendering and structured data become a repeatable CSV reporting workflow.",
+    "status": "BUILT",
+    "domain": "Automation",
+    "kind": "SOFTWARE",
+    "timeframe": "2026",
+    "startYear": 2026,
+    "endYear": 2026,
+    "sortOrder": 5,
+    "featured": false,
+    "nextIteration": "",
+    "privateNotes": "",
+    "technologies": ["n8n", "IMAP", "Express", "Playwright", "Chromium", "CSV"],
+    "sections": [
+      {
+        "heading": "The recurring task",
+        "body": "Collect inputs, extract useful fields and produce a repeatable report. The public record describes the integration pattern; source messages, recipients and organization-specific logic stay private."
+      },
+      {
+        "heading": "The working path",
+        "body": "A self-hosted n8n workflow ingests email over IMAP. Local Express services and Playwright/Chromium handle content that requires browser rendering. Extracted records become a CSV deliverable."
+      },
+      {
+        "heading": "A constraint changed the design",
+        "body": "A planned spreadsheet API integration was unavailable. CSV delivery provided a working route without requiring that integration. Separating extraction from output made this substitution possible."
+      },
+      {
+        "heading": "What the result establishes",
+        "body": "The recorded workflow established the CSV reporting path. The archive does not assign unsupported time savings, throughput, business impact or adoption numbers."
+      }
+    ],
+    "updates": [
+      {
+        "date": "2026",
+        "title": "CSV reporting route established",
+        "body": "Mail ingestion, browser rendering and structured extraction were connected to portable report output.",
+        "kind": "NOTE"
+      }
+    ],
+    "links": [
+      {
+        "label": "Project record",
+        "url": "https://github.com/sameerakhtari/portfolio2.0/blob/main/data/projects.ts"
+      }
+    ],
+    "relationships": [],
+    "architecture": {
+      "nodes": [
+        {
+          "key": "mail",
+          "label": "MAIL",
+          "detail": "IMAP input",
+          "column": 0
+        },
+        {
+          "key": "flow",
+          "label": "WORKFLOW",
+          "detail": "n8n orchestration",
+          "column": 1
+        },
+        {
+          "key": "browser",
+          "label": "BROWSER",
+          "detail": "Express + Playwright",
+          "column": 2
+        },
+        {
+          "key": "records",
+          "label": "RECORDS",
+          "detail": "Normalize fields",
+          "column": 2
+        },
+        {
+          "key": "csv",
+          "label": "CSV",
+          "detail": "Portable report",
+          "column": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "mail",
+          "to": "flow",
+          "label": "ingest"
+        },
+        {
+          "from": "flow",
+          "to": "browser",
+          "label": "render"
+        },
+        {
+          "from": "browser",
+          "to": "records",
+          "label": "extract"
+        },
+        {
+          "from": "records",
+          "to": "csv",
+          "label": "serialize"
+        }
+      ]
+    },
+    "media": []
+  },
+  {
+    "privateNotes": "",
+    "featured": false,
+    "nextIteration": "Continue device testing, review data boundaries and complete the documented release prerequisites.",
+    "technologies": ["Android", "Kotlin", "S Pen", "LiteRT-LM", "Local AI"],
+    "sections": [
+      {
+        "heading": "Write first",
+        "body": "The current repository describes a native Android client for Samsung devices with S Pen support. Handwritten input, pressure-aware ink, undo/redo and local history form the core interaction."
+      },
+      {
+        "heading": "Keep the inference choice explicit",
+        "body": "Writing-only mode does not need an AI provider. Optional modes include an on-device model, a local server, a private proxy and a compatible remote API. These paths have different data boundaries."
+      },
+      {
+        "heading": "An evolving fork",
+        "body": "The project originated as a fork of MaximeRivest/riddle. The original reMarkable implementation is preserved while this fork develops the Android diary. The upstream lineage is credited rather than treated as wholly original software."
+      },
+      {
+        "heading": "Current scope",
+        "body": "The repository is under active development. A public store release is not established; the README lists signing, device testing, privacy material and a review of naming/artwork rights as release work. iOS is a plan, not an implemented platform."
+      }
+    ],
+    "updates": [
+      {
+        "date": "2026",
+        "title": "Android is the active implementation",
+        "body": "Current source describes the S Pen client and optional AI paths, with reMarkable preserved for reference.",
+        "kind": "NOTE"
+      }
+    ],
+    "links": [
+      {
+        "label": "Source repository",
+        "url": "https://github.com/sameerakhtari/riddle"
+      },
+      {
+        "label": "Original upstream",
+        "url": "https://github.com/MaximeRivest/riddle"
+      }
+    ],
+    "relationships": [],
+    "architecture": {
+      "nodes": [
+        {
+          "key": "pen",
+          "label": "STYLUS",
+          "detail": "Handwritten input",
+          "column": 0
+        },
+        {
+          "key": "app",
+          "label": "ANDROID",
+          "detail": "Ink + local history",
+          "column": 1
+        },
+        {
+          "key": "local",
+          "label": "LOCAL MODEL",
+          "detail": "Optional on-device inference",
+          "column": 2
+        },
+        {
+          "key": "remote",
+          "label": "PROVIDER",
+          "detail": "Optional remote inference",
+          "column": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "pen",
+          "to": "app",
+          "label": "ink"
+        },
+        {
+          "from": "app",
+          "to": "local",
+          "label": "local mode"
+        },
+        {
+          "from": "app",
+          "to": "remote",
+          "label": "explicit remote mode"
+        }
+      ]
+    },
+    "media": [],
+    "slug": "handwritten-diary",
+    "title": "An interface made of ink",
+    "subtitle": "Handwriting, local memory and optional AI",
+    "summary": "A stylus-first Android diary exploring handwriting as the interface, with writing-only, local-model and remote-provider modes.",
+    "status": "EVOLVING",
+    "domain": "Software",
+    "kind": "SOFTWARE",
+    "timeframe": "2026 — ongoing",
+    "startYear": 2026,
+    "endYear": null,
+    "sortOrder": 6
+  },
+  {
+    "privateNotes": "",
+    "featured": false,
+    "nextIteration": "",
+    "technologies": ["Python", "Flask", "MongoDB", "HTML", "CSS"],
+    "sections": [
+      {
+        "heading": "The campus workflow",
+        "body": "The older projects archive describes a web application for organizing student volunteers: recruitment, task assignment and tracking contributed hours."
+      },
+      {
+        "heading": "Implementation record",
+        "body": "The historical description names Flask and MongoDB, administrator authentication, configurable forms and award management. No current public source repository or live deployment was verified during migration."
+      },
+      {
+        "heading": "Why preserve it?",
+        "body": "This is a useful part of the software lineage: modeling people, tasks and records before later infrastructure and operational automation work. Its historical status reflects the available evidence, not a judgment that the project failed."
+      }
+    ],
+    "updates": [],
+    "links": [
+      {
+        "label": "Historical archive source",
+        "url": "https://github.com/sameerakhtari/projects.sameerakhtari.com"
+      }
+    ],
+    "relationships": [],
+    "architecture": {
+      "nodes": [],
+      "edges": []
+    },
+    "media": [],
+    "slug": "volunteer-management",
+    "title": "Organizing people around an event",
+    "subtitle": "Campus volunteer-management application",
+    "summary": "A historical Flask and MongoDB application for volunteer recruitment, task assignment, recorded hours and awards.",
+    "status": "HISTORICAL",
+    "domain": "Software",
+    "kind": "SOFTWARE",
+    "timeframe": "Earlier work",
+    "startYear": null,
+    "endYear": null,
+    "sortOrder": 8
+  },
+  {
+    "slug": "smart-hat",
+    "title": "Smart Hat",
+    "subtitle": "Smart Hat",
+    "summary": "An embedded vision concept connecting camera input to processing and speech for a person with visual impairment.",
+    "status": "EXPERIMENT",
+    "domain": "Embedded & IoT",
+    "kind": "HYBRID",
+    "timeframe": "Earlier experiment",
+    "startYear": null,
+    "endYear": null,
+    "sortOrder": 9,
+    "featured": false,
+    "nextIteration": "",
+    "privateNotes": "",
+    "technologies": [
+      "ESP32-CAM",
+      "C/C++",
+      "Python",
+      "Image processing",
+      "Wireless"
+    ],
+    "sections": [
+      {
+        "heading": "Intent",
+        "body": "Smart Hat explored how camera and sensor input could become audio information about a person's surroundings. It connects embedded hardware, image-processing ideas and mobile integration."
+      },
+      {
+        "heading": "Architecture",
+        "body": "An ESP32-CAM and microcontroller/sensor components provide input. Processing concepts convert visual information into data that can be delivered as speech."
+      },
+      {
+        "heading": "Scope",
+        "body": "This is a historical experimental concept. Clinical effectiveness, safety as a navigation aid, completed commercial-product status and real-world deployment are not established by the available record."
+      },
+      {
+        "heading": "Engineering connection",
+        "body": "The same camera → processing → useful output relationship reappears in later local-vision and home-automation experiments."
+      }
+    ],
+    "updates": [],
+    "links": [
+      {
+        "label": "Project record",
+        "url": "https://github.com/sameerakhtari/portfolio2.0/blob/main/data/projects.ts"
+      }
+    ],
+    "relationships": [],
+    "architecture": {
+      "nodes": [
+        {
+          "key": "camera",
+          "label": "CAMERA",
+          "detail": "ESP32-CAM + sensors",
+          "column": 0
+        },
+        {
+          "key": "processing",
+          "label": "PROCESSING",
+          "detail": "Vision concept",
+          "column": 1
+        },
+        {
+          "key": "speech",
+          "label": "AUDIO",
+          "detail": "Spoken information",
+          "column": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "camera",
+          "to": "processing",
+          "label": "input"
+        },
+        {
+          "from": "processing",
+          "to": "speech",
+          "label": "output"
+        }
+      ]
+    },
+    "media": []
+  },
+  {
+    "slug": "encrypted-chat",
+    "title": "Messages across trust boundaries",
+    "subtitle": "Decentralized encrypted chat · Final-year project",
+    "summary": "A university project exploring encrypted communication and decentralized data handling through blockchain concepts.",
+    "status": "HISTORICAL",
+    "domain": "Security",
+    "kind": "SOFTWARE",
+    "timeframe": "University project · completed by 2023",
+    "startYear": null,
+    "endYear": 2023,
+    "sortOrder": 10,
+    "featured": false,
+    "nextIteration": "",
+    "privateNotes": "",
+    "technologies": [
+      "Solidity",
+      "Ethereum concepts",
+      "AES-256",
+      "Python",
+      "JavaScript",
+      "React Native"
+    ],
+    "sections": [
+      {
+        "heading": "Context",
+        "body": "The final-year project at MUET brought application development, cryptography and blockchain concepts into a decentralized encrypted chat application."
+      },
+      {
+        "heading": "Design",
+        "body": "The project explored encrypted message data and blockchain-backed tamper resistance. Solidity, Python, web technologies, React Native and database components formed the historical technology set."
+      },
+      {
+        "heading": "Trust boundaries",
+        "body": "Encryption, key handling and distributed state solve different problems. The illustration distinguishes message encryption from propagation through a distributed network; it is a conceptual view, not a new security specification."
+      },
+      {
+        "heading": "Scope",
+        "body": "AES-256 and decentralized data handling were part of the project exploration. No independent security audit, production deployment or claim of invulnerability is made."
+      }
+    ],
+    "updates": [],
+    "links": [
+      {
+        "label": "Project record",
+        "url": "https://github.com/sameerakhtari/portfolio2.0/blob/main/data/projects.ts"
+      }
+    ],
+    "relationships": [],
+    "architecture": {
+      "nodes": [],
+      "edges": []
+    },
+    "media": []
+  },
+  {
+    "slug": "home-network",
+    "title": "The network foundation",
+    "subtitle": "Home distribution & access network",
+    "summary": "pfSense, x64 hardware and multiple interfaces formed an earlier generation of the home network.",
+    "status": "HISTORICAL",
+    "domain": "Networking",
+    "kind": "HYBRID",
+    "timeframe": "2023",
+    "startYear": 2023,
+    "endYear": 2023,
+    "sortOrder": 11,
+    "featured": false,
+    "nextIteration": "",
+    "privateNotes": "",
+    "technologies": [
+      "pfSense",
+      "x64",
+      "Routing",
+      "Firewall",
+      "DNS",
+      "Ethernet"
+    ],
+    "sections": [
+      {
+        "heading": "Architecture",
+        "body": "A distribution/access-layer network used pfSense on x64 hardware with multiple interfaces. Areas included cameras, media, personal systems and wireless connectivity."
+      },
+      {
+        "heading": "Engineering focus",
+        "body": "Routing, firewall and DNS configuration established boundaries between different uses of the same physical network."
+      },
+      {
+        "heading": "Evolution",
+        "body": "This project belongs to the lineage of the current homelab. The lab explorer's evolution control follows that growth from a network foundation to containers, Kubernetes and automation."
+      }
+    ],
+    "updates": [
+      {
+        "date": "2023",
+        "title": "Network foundation",
+        "body": "The historical project records pfSense on x64 hardware with routing, firewall and DNS work.",
+        "kind": "NOTE"
+      }
+    ],
+    "links": [
+      {
+        "label": "Project record",
+        "url": "https://github.com/sameerakhtari/portfolio2.0/blob/main/data/projects.ts"
+      }
+    ],
+    "relationships": [],
+    "architecture": {
+      "nodes": [
+        {
+          "key": "wan",
+          "label": "UPSTREAM",
+          "detail": "Internet connection",
+          "column": 0
+        },
+        {
+          "key": "router",
+          "label": "ROUTER",
+          "detail": "pfSense",
+          "column": 1
+        },
+        {
+          "key": "switch",
+          "label": "ACCESS LAYER",
+          "detail": "Ethernet switching",
+          "column": 2
+        },
+        {
+          "key": "devices",
+          "label": "CLIENTS",
+          "detail": "Cameras · media · devices",
+          "column": 3
+        }
+      ],
+      "edges": [
+        {
+          "from": "wan",
+          "to": "router",
+          "label": "ingress"
+        },
+        {
+          "from": "router",
+          "to": "switch",
+          "label": "forward"
+        },
+        {
+          "from": "switch",
+          "to": "devices",
+          "label": "connect"
+        }
+      ]
+    },
+    "media": []
+  },
+  {
+    "slug": "nas-media",
+    "title": "A home for the data",
+    "subtitle": "Home NAS & media server",
+    "summary": "An earlier TrueNAS environment combined network storage, media and home-automation experiments.",
+    "status": "HISTORICAL",
+    "domain": "Infrastructure",
+    "kind": "HYBRID",
+    "timeframe": "Earlier generation",
+    "startYear": null,
+    "endYear": null,
+    "sortOrder": 12,
+    "featured": false,
+    "nextIteration": "",
+    "privateNotes": "",
+    "technologies": [
+      "TrueNAS",
+      "RAID",
+      "Network storage",
+      "Home Assistant",
+      "Frigate"
+    ],
+    "sections": [
+      {
+        "heading": "First generation",
+        "body": "An x64 machine and multiple drives became a NAS and media environment. RAID storage, network file access and media streaming shared a home with Home Assistant and Frigate-related experiments."
+      },
+      {
+        "heading": "Iteration",
+        "body": "The modern Linux and Docker-based home server is a later generation of that idea. The common thread is connecting storage to services while learning the operational tradeoffs."
+      },
+      {
+        "heading": "Storage lesson",
+        "body": "Redundancy, backup and recovery are separate concerns. This archive records the platform evolution without asserting an unverified backup or recovery guarantee."
+      }
+    ],
+    "updates": [],
+    "links": [
+      {
+        "label": "Project record",
+        "url": "https://github.com/sameerakhtari/portfolio2.0/blob/main/data/projects.ts"
+      }
+    ],
+    "relationships": [
+      {
+        "target": "home-network",
+        "type": "DEPENDS_ON",
+        "note": "Network access connects shared storage to clients."
+      }
+    ],
+    "architecture": {
+      "nodes": [
+        {
+          "key": "clients",
+          "label": "CLIENTS",
+          "detail": "Network file access",
+          "column": 0
+        },
+        {
+          "key": "nas",
+          "label": "NAS",
+          "detail": "Historical TrueNAS host",
+          "column": 1
+        },
+        {
+          "key": "storage",
+          "label": "STORAGE",
+          "detail": "Multiple drives",
+          "column": 2
+        },
+        {
+          "key": "media",
+          "label": "MEDIA",
+          "detail": "Jellyfin",
+          "column": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "clients",
+          "to": "nas",
+          "label": "file access"
+        },
+        {
+          "from": "nas",
+          "to": "storage",
+          "label": "read / write"
+        },
+        {
+          "from": "nas",
+          "to": "media",
+          "label": "serves"
+        }
+      ]
+    },
+    "media": []
+  },
+  {
+    "slug": "diy-security-hardware",
+    "title": "At the hardware boundary",
+    "subtitle": "USB & Wi-Fi Ducky experiments",
+    "summary": "Microcontrollers, custom circuit work and HID behaviour explored through a controlled security experiment.",
+    "status": "HISTORICAL",
+    "domain": "Security",
+    "kind": "HARDWARE",
+    "timeframe": "Earlier experiment",
+    "startYear": null,
+    "endYear": null,
+    "sortOrder": 13,
+    "featured": false,
+    "nextIteration": "",
+    "privateNotes": "",
+    "technologies": ["Microcontrollers", "C/C++", "Arduino", "HID", "Wi-Fi"],
+    "sections": [
+      {
+        "heading": "The experiment",
+        "body": "This project combined open-source concepts with microcontroller and circuit work to explore how USB HID and Wi-Fi-controlled embedded functionality behave."
+      },
+      {
+        "heading": "Engineering focus",
+        "body": "The interesting boundary is between firmware, an interface trusted by the operating system and physical hardware. Public documentation remains at the architecture and learning level."
+      },
+      {
+        "heading": "Source lineage",
+        "body": "The public Wi-Fi Ducky repository is a fork of an existing open-source project. It is credited as source lineage rather than presented as entirely original software."
+      }
+    ],
+    "updates": [],
+    "links": [
+      {
+        "label": "Open-source fork",
+        "url": "https://github.com/sameerakhtari/wifi_ducky"
+      },
+      {
+        "label": "Project record",
+        "url": "https://github.com/sameerakhtari/portfolio2.0/blob/main/data/projects.ts"
+      }
+    ],
+    "relationships": [],
+    "architecture": {
+      "nodes": [],
+      "edges": []
+    },
+    "media": []
+  },
+  {
+    "slug": "smart-home",
+    "title": "Code reaches the room",
+    "subtitle": "DIY smart home",
+    "summary": "A network-connected microcontroller experiment for room lighting and fan control.",
+    "status": "HISTORICAL",
+    "domain": "Embedded & IoT",
+    "kind": "HYBRID",
+    "timeframe": "2021",
+    "startYear": 2021,
+    "endYear": 2021,
+    "sortOrder": 14,
+    "featured": false,
+    "nextIteration": "",
+    "privateNotes": "",
+    "technologies": [
+      "Microcontrollers",
+      "C/C++",
+      "Web services",
+      "Google Assistant concepts"
+    ],
+    "sections": [
+      {
+        "heading": "Intent",
+        "body": "Control room lighting and a fan through network connectivity and a microcontroller. The project explored integration with Google Home and Google Assistant concepts."
+      },
+      {
+        "heading": "The signal path",
+        "body": "A command crosses the network, reaches the controller and changes a physical output. The diagram makes that software-to-hardware boundary visible."
+      },
+      {
+        "heading": "Connection to the present",
+        "body": "Later Home Assistant work grows from the same curiosity about connecting services to physical devices. This record does not assert current interoperability for the historical prototype."
+      }
+    ],
+    "updates": [
+      {
+        "date": "2021",
+        "title": "A room-control experiment",
+        "body": "A network-connected microcontroller explored lighting and fan control.",
+        "kind": "NOTE"
+      }
+    ],
+    "links": [
+      {
+        "label": "Project record",
+        "url": "https://github.com/sameerakhtari/portfolio2.0/blob/main/data/projects.ts"
+      }
+    ],
+    "relationships": [],
+    "architecture": {
+      "nodes": [
+        {
+          "key": "command",
+          "label": "COMMAND",
+          "detail": "Network service",
+          "column": 0
+        },
+        {
+          "key": "controller",
+          "label": "CONTROLLER",
+          "detail": "Microcontroller",
+          "column": 1
+        },
+        {
+          "key": "outputs",
+          "label": "OUTPUTS",
+          "detail": "Light · fan",
+          "column": 2
+        }
+      ],
+      "edges": [
+        {
+          "from": "command",
+          "to": "controller",
+          "label": "request"
+        },
+        {
+          "from": "controller",
+          "to": "outputs",
+          "label": "control"
+        }
+      ]
+    },
+    "media": []
+  }
+]

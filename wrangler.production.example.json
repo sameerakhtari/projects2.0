@@ -1,0 +1,40 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sameer-project-atlas",
+  "account_id": "REPLACE_WITH_ACCOUNT_ID",
+  "main": "src/index.tsx",
+  "compatibility_date": "2026-05-15",
+  "assets": {
+    "directory": "public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "REPLACE_WITH_D1_NAME",
+      "database_id": "REPLACE_WITH_D1_UUID",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "r2_buckets": [
+    { "binding": "BUCKET", "bucket_name": "REPLACE_WITH_PRIVATE_BUCKET" }
+  ],
+  "ratelimits": [
+    {
+      "name": "ADMIN_RATE_LIMITER",
+      "namespace_id": "REPLACE_WITH_UNUSED_POSITIVE_INTEGER",
+      "simple": { "limit": 120, "period": 60 }
+    }
+  ],
+  "vars": {
+    "SITE_ORIGIN": "https://REPLACE_WITH_DOMAIN",
+    "ENVIRONMENT": "production",
+    "ACCESS_ISSUER": "https://REPLACE_WITH_TEAM.cloudflareaccess.com",
+    "ACCESS_AUDIENCE": "REPLACE_WITH_APPLICATION_AUD"
+  },
+  "routes": [{ "pattern": "REPLACE_WITH_DOMAIN", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": false }
+}
