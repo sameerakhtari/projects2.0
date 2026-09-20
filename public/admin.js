@@ -49,12 +49,10 @@
       },
       body: body instanceof Blob ? body : JSON.stringify(body),
     });
-    const data = await response
-      .json()
-      .catch(() => ({
-        error:
-          "The server returned an unexpected response. Your input is still here.",
-      }));
+    const data = await response.json().catch(() => ({
+      error:
+        "The server returned an unexpected response. Your input is still here.",
+    }));
     if (!response.ok)
       throw new Error(data.error || "The request could not be completed.");
     return data;
